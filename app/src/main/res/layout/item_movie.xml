@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/iv_movie_image"
+        android:layout_width="match_parent"
+        android:layout_height="278dp"
+        android:layout_gravity="center_horizontal"
+        android:maxHeight="278dp"
+        android:orientation="vertical"
+        android:scaleType="centerCrop"
+        tools:src="@tools:sample/backgrounds/scenic" />
+
+    <LinearLayout
+        android:padding="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#8000"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_movie_title"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:lines="2"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:textAlignment="center"
+            android:textColor="@android:color/white"
+            tools:text="@tools:sample/lorem" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_date_range"
+                android:tint="@android:color/holo_green_light" />
+
+            <TextView
+                android:id="@+id/tv_year"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                tools:text="2017" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_star"
+                android:tint="@android:color/holo_orange_light"/>
+
+            <TextView
+                android:id="@+id/tv_rating"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/white"
+                tools:text="6.5" />
+        </LinearLayout>
+    </LinearLayout>
+
+</FrameLayout>
