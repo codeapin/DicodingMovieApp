@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">DicodingMovieApp</string>
+    <string name="title_activity_home">Beranda</string>
+
+    <string name="navigation_drawer_open">Buka navigasi</string>
+    <string name="navigation_drawer_close">Tutup navigasi</string>
+
+    <string name="action_settings">Setelan Bahasa</string>
+
+    <string name="error_default_mesagge">Terjadi Kesalahan…</string>
+
+    <string name="nav_now_playing">Sedang Diputar</string>
+    <string name="nav_upcoming">Akan Datang</string>
+    <string name="nav_communicate">Hubungkan</string>
+    <string name="nav_share">Bagikan</string>
+    <string name="nav_other">Lainnya</string>
+    <string name="nav_about_me">Tentang saya</string>
+
+    <string name="home_no_movies_found">Tidak ada data</string>
+    <string name="menu_search">Cari…</string>
+
+    <string name="home_hello_world">Hello World. Nama saya Kadek Daprin Wakaliana. Saya merupakan orang yang mendevelop aplikasi sederhana ini.</string>
+
+    <string name="item_no_movies_found">Tidak ada data</string>
+    <string name="item_released">Dirilis: %s</string>
+    <string name="item_rating">Nilai: %s dari %s suara</string>
+    <string name="item_popularity">Popularitas: %s</string>
+
+    <string name="movie_detail_overview">Sinopsis</string>
+</resources>

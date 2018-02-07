@@ -1,4 +1,4 @@
-package com.codeapin.dicodingmovieapp.ui;
+package com.codeapin.dicodingmovieapp.ui.moviedetails;
 
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +20,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codeapin.dicodingmovieapp.R;
-import com.codeapin.dicodingmovieapp.data.model.MovieItem;
-import com.codeapin.dicodingmovieapp.util.ApiClient;
+import com.codeapin.dicodingmovieapp.data.remote.model.MovieItem;
+import com.codeapin.dicodingmovieapp.data.remote.service.ApiClient;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -57,7 +57,7 @@ public class MovieDetailActivity extends AppCompatActivity {
     NestedScrollView scroll;
     @BindView(R.id.coordinator)
     CoordinatorLayout coordinator;
-    private MovieItem mMovieItem;
+    private MovieItem movieItem;
 
     public static void start(Context context, MovieItem movieItem) {
         Intent intent = new Intent(context, MovieDetailActivity.class);
@@ -74,7 +74,7 @@ public class MovieDetailActivity extends AppCompatActivity {
         if (!intent.hasExtra(EXTRA_MOVIE_ITEM)) {
             finish();
         }
-        mMovieItem = intent.getParcelableExtra(EXTRA_MOVIE_ITEM);
+        movieItem = intent.getParcelableExtra(EXTRA_MOVIE_ITEM);
         setupActionBar();
         populateFields();
     }
@@ -84,22 +84,25 @@ public class MovieDetailActivity extends AppCompatActivity {
         pbLoading.setVisibility(View.GONE);
 
         Glide.with(this)
-                .load(ApiClient.BASE_IMAGE_URL_W500 + mMovieItem.getBackdropPath())
+                .load(ApiClient.BASE_IMAGE_URL_W500 + movieItem.getBackdropPath())
                 .into(expandedImage);
         Glide.with(this)
-                .load(ApiClient.BASE_IMAGE_URL_W185 + mMovieItem.getPosterPath())
+                .load(ApiClient.BASE_IMAGE_URL_W185 + movieItem.getPosterPath())
                 .into(tvMoviePoster);
 
-        tvOverview.setText(mMovieItem.getOverview());
-        tvMovieTitle.setText(mMovieItem.getTitle());
-        tvDateRelease.setText("Released: " + mMovieItem.getReleaseDate());
-        tvRating.setText("Rating: " + String.valueOf(mMovieItem.getVoteAverage()) + " of " +
-                String.valueOf(mMovieItem.getVoteCount()) + " vote");
-        tvPouplarity.setText("Popularity: " + String.valueOf(mMovieItem.getPopularity()));
+        tvOverview.setText(movieItem.getOverview());
+        tvMovieTitle.setText(movieItem.getTitle());
+        tvDateRelease.setText(String.format(getString(R.string.item_released),
+                movieItem.getReleaseDate()));
+        tvRating.setText(String.format(getString(R.string.item_rating),
+                String.valueOf(movieItem.getVoteAverage()),
+                String.valueOf(movieItem.getVoteCount())));
+        tvPouplarity.setText(String.format(getString(R.string.item_popularity),
+                String.valueOf(movieItem.getPopularity())));
     }
 
     private void setupActionBar() {
-        collapsingToolbar.setTitle(mMovieItem.getTitle());
+        collapsingToolbar.setTitle(movieItem.getTitle());
         collapsingToolbar.setExpandedTitleColor(ContextCompat.getColor(this, android.R.color.transparent));
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -108,7 +111,7 @@ public class MovieDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
+        if (item.getItemId() == android.R.id.home) {
             onBackPressed();
         }
         return super.onOptionsItemSelected(item);

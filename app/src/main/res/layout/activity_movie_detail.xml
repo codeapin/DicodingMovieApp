@@ -5,7 +5,7 @@
     android:id="@+id/coordinator"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.codeapin.dicodingmovieapp.ui.MovieDetailActivity">
+    tools:context="com.codeapin.dicodingmovieapp.ui.moviedetails.MovieDetailActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -95,12 +95,12 @@
                                 android:padding="8dp">
 
                                 <TextView
-                                    android:layout_marginLeft="4dp"
+                                    android:layout_marginStart="4dp"
                                     android:id="@+id/tv_movie_title"
                                     style="@style/Base.TextAppearance.AppCompat.Title"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Movie Title" />
+                                    tools:text="Movie Title" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -180,7 +180,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="8dp"
-                            android:text="Overview" />
+                            android:text="@string/movie_detail_overview" />
 
                         <TextView
                             android:id="@+id/tv_overview"

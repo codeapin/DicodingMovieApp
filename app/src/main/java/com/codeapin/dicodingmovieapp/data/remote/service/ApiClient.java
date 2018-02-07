@@ -1,4 +1,4 @@
-package com.codeapin.dicodingmovieapp.util;
+package com.codeapin.dicodingmovieapp.data.remote.service;
 
 
 import com.codeapin.dicodingmovieapp.BuildConfig;

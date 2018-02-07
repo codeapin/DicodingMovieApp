@@ -1,4 +1,4 @@
-package com.codeapin.dicodingmovieapp.ui;
+package com.codeapin.dicodingmovieapp.ui.movielist;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.codeapin.dicodingmovieapp.R;
-import com.codeapin.dicodingmovieapp.data.model.MovieItem;
-import com.codeapin.dicodingmovieapp.util.ApiClient;
+import com.codeapin.dicodingmovieapp.data.remote.model.MovieItem;
+import com.codeapin.dicodingmovieapp.data.remote.service.ApiClient;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,13 +66,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieViewHol
 
         @BindView(R.id.iv_movie_image)
         ImageView ivMovieImage;
-
         @BindView(R.id.tv_movie_title)
         TextView tvMovieTitle;
-
         @BindView(R.id.tv_year)
         TextView tvYear;
-
         @BindView(R.id.tv_rating)
         TextView tvRating;
 

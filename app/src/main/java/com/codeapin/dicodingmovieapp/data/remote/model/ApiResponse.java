@@ -1,4 +1,4 @@
-package com.codeapin.dicodingmovieapp.data.model;
+package com.codeapin.dicodingmovieapp.data.remote.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class APIResponse implements Parcelable {
+public class ApiResponse implements Parcelable {
 
 	@SerializedName("page")
 	private int page;
@@ -66,25 +66,25 @@ public class APIResponse implements Parcelable {
 		dest.writeInt(this.totalResults);
 	}
 
-	public APIResponse() {
+	public ApiResponse() {
 	}
 
-	protected APIResponse(Parcel in) {
+	protected ApiResponse(Parcel in) {
 		this.page = in.readInt();
 		this.totalPages = in.readInt();
 		this.results = in.createTypedArrayList(MovieItem.CREATOR);
 		this.totalResults = in.readInt();
 	}
 
-	public static final Parcelable.Creator<APIResponse> CREATOR = new Parcelable.Creator<APIResponse>() {
+	public static final Parcelable.Creator<ApiResponse> CREATOR = new Parcelable.Creator<ApiResponse>() {
 		@Override
-		public APIResponse createFromParcel(Parcel source) {
-			return new APIResponse(source);
+		public ApiResponse createFromParcel(Parcel source) {
+			return new ApiResponse(source);
 		}
 
 		@Override
-		public APIResponse[] newArray(int size) {
-			return new APIResponse[size];
+		public ApiResponse[] newArray(int size) {
+			return new ApiResponse[size];
 		}
 	};
 }

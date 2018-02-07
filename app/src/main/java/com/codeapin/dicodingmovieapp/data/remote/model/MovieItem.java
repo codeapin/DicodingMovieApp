@@ -1,4 +1,4 @@
-package com.codeapin.dicodingmovieapp.data.model;
+package com.codeapin.dicodingmovieapp.data.remote.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
