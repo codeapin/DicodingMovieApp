@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
@@ -95,17 +95,16 @@
                                 android:padding="8dp">
 
                                 <TextView
-                                    android:layout_marginStart="4dp"
                                     android:id="@+id/tv_movie_title"
-                                    style="@style/Base.TextAppearance.AppCompat.Title"
+                                    style="@style/TextTitle"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp"
                                     tools:text="Movie Title" />
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginTop="8dp">
+                                    android:layout_height="wrap_content">
 
                                     <ImageView
                                         android:layout_width="wrap_content"
@@ -176,10 +175,9 @@
                         android:padding="8dp">
 
                         <TextView
-                            style="@style/TextAppearance.AppCompat.Title"
+                            style="@style/TextTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:paddingBottom="8dp"
                             android:text="@string/movie_detail_overview" />
 
                         <TextView
@@ -194,7 +192,7 @@
 
                 <View
                     android:layout_width="wrap_content"
-                    android:layout_height="8dp"/>
+                    android:layout_height="8dp" />
             </LinearLayout>
         </RelativeLayout>
     </android.support.v4.widget.NestedScrollView>
