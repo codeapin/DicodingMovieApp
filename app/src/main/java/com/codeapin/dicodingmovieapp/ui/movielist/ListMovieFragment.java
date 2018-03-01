@@ -1,6 +1,7 @@
 package com.codeapin.dicodingmovieapp.ui.movielist;
 
 
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -14,9 +15,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codeapin.dicodingmovieapp.R;
+import com.codeapin.dicodingmovieapp.data.local.DatabaseContract;
+import com.codeapin.dicodingmovieapp.data.local.DatabaseHelper;
+import com.codeapin.dicodingmovieapp.data.local.MovieHelper;
 import com.codeapin.dicodingmovieapp.data.remote.model.ApiResponse;
+import com.codeapin.dicodingmovieapp.data.remote.model.MovieItem;
 import com.codeapin.dicodingmovieapp.data.remote.service.ApiClient;
 import com.codeapin.dicodingmovieapp.ui.moviedetails.MovieDetailActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,17 +34,21 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static android.provider.BaseColumns._ID;
+import static com.codeapin.dicodingmovieapp.data.local.DatabaseContract.MovieColumns.TABLE_MOVIE;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ListMovieFragment extends Fragment {
 
+    public static final int SORT_ORDER_UPCOMING = 802;
+    public static final int SORT_ORDER_NOW_PLAYING = 571;
+    public static final int SORT_ORDER_FAVORIT = 493;
+
     private static final String TAG = ListMovieFragment.class.getSimpleName();
     private static final String EXTRA_MOVIE_LIST = "MovieList";
     private static final String EXTRA_SORT_ORDER = "SORT_BY";
-    public static final int SORT_ORDER_UPCOMING = 802;
-    public static final int SORT_ORDER_NOW_PLAYING = 571;
-
     public static ListMovieFragment newInstance(int sort) {
         Bundle args = new Bundle();
         args.putInt(EXTRA_SORT_ORDER, sort);
@@ -47,6 +59,7 @@ public class ListMovieFragment extends Fragment {
 
     @BindView(R.id.rv_home)
     RecyclerView rvHome;
+
     @BindView(R.id.sr_home)
     SwipeRefreshLayout srHome;
     @BindView(R.id.tv_error_message)
@@ -54,6 +67,7 @@ public class ListMovieFragment extends Fragment {
     Unbinder unbinder;
 
     private MovieAdapter adapter;
+    private MovieHelper movieHelper;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ApiResponse movieList;
     private int sortOrder;
@@ -61,7 +75,6 @@ public class ListMovieFragment extends Fragment {
     public ListMovieFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,6 +90,22 @@ public class ListMovieFragment extends Fragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (sortOrder == SORT_ORDER_FAVORIT && movieHelper != null) {
+            movieHelper.open();
+        }
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (sortOrder == SORT_ORDER_FAVORIT && movieHelper != null) {
+            movieHelper.close();
+        }
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -89,9 +118,9 @@ public class ListMovieFragment extends Fragment {
         outState.putParcelable(EXTRA_MOVIE_LIST, movieList);
     }
 
-
     private void setupView() {
         adapter = new MovieAdapter(null);
+        movieHelper = new MovieHelper(getContext());
         adapter.setMovieOnClickListener(item -> MovieDetailActivity.start(getContext(), item));
         rvHome.setAdapter(adapter);
         rvHome.setLayoutManager(new GridLayoutManager(getContext(), 2));
@@ -108,6 +137,9 @@ public class ListMovieFragment extends Fragment {
         switch (sortOrder) {
             case SORT_ORDER_NOW_PLAYING:
                 moviesSingle = ApiClient.getApiService().getNowPlayingMovies();
+                break;
+            case SORT_ORDER_FAVORIT:
+                moviesSingle = getMovieFromProvider();
                 break;
             default:
                 moviesSingle = ApiClient.getApiService().getUpcomingMovies();
@@ -136,5 +168,28 @@ public class ListMovieFragment extends Fragment {
                             Log.e(TAG, "retrieveItems: ", throwable);
                         }
                 );
+    }
+
+    private Single<ApiResponse> getMovieFromProvider(){
+        return Single.fromCallable(
+                () -> getActivity()
+                        .getContentResolver()
+                        .query(DatabaseContract.MovieColumns.CONTENT_URI,
+                                null, null,
+                                null, null))
+                .map(cursor -> {
+                    List<MovieItem> movieItemList = new ArrayList<>();
+                    cursor.moveToFirst();
+                    if (cursor.getCount() > 0) {
+                        do {
+                            movieItemList.add(new MovieItem(cursor));
+                            cursor.moveToNext();
+
+                        } while (!cursor.isAfterLast());
+                    }
+                    cursor.close();
+                    return movieItemList;
+                })
+                .map(ApiResponse::new);
     }
 }

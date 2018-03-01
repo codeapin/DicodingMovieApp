@@ -69,6 +69,10 @@ public class ApiResponse implements Parcelable {
 	public ApiResponse() {
 	}
 
+	public ApiResponse(List<MovieItem> movieItemList) {
+		setResults(movieItemList);
+	}
+
 	protected ApiResponse(Parcel in) {
 		this.page = in.readInt();
 		this.totalPages = in.readInt();

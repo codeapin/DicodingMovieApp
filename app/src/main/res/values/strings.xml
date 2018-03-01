@@ -15,11 +15,12 @@
     <string name="nav_share">Share</string>
     <string name="nav_other">Other</string>
     <string name="nav_about_me">About me</string>
+    <string name="nav_favorite">Favorite</string>
 
     <string name="home_no_movies_found">No Movies Found</string>
     <string name="menu_search">Search…</string>
 
-    <string name="home_hello_world">Hello World. My name is Kadek Daprin Wakaliana. I am the developer of this simple app.</string>
+    <string name="home_hello_world">Hello World. \nMy name is Kadek Daprin Wakaliana. \nI am the developer of this simple app.</string>
 
     <string name="item_no_movies_found">No Movies Found</string>
     <string name="item_released">Released: %s</string>
@@ -27,5 +28,7 @@
     <string name="item_popularity">Popularity: %s</string>
 
     <string name="movie_detail_overview">Overview</string>
-
+    <string name="movie_detail_success_favorite">Marked as favorite.</string>
+    <string name="movie_detail_success_unfavorite">Remove from favorite</string>
+    <string name="error_default">Something went wrong</string>
 </resources>

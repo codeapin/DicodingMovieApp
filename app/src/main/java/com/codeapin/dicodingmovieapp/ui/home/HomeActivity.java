@@ -83,6 +83,9 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_upcoming:
                 resultTabs.getTabAt(1).select();
                 break;
+            case R.id.nav_favorite:
+                resultTabs.getTabAt(2).select();
+                break;
             case R.id.nav_about:
                 new AlertDialog.Builder(this)
                         .setMessage(R.string.home_hello_world)
@@ -111,6 +114,7 @@ public class HomeActivity extends AppCompatActivity
         FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
         fragmentAdapter.addFragment(ListMovieFragment.newInstance(ListMovieFragment.SORT_ORDER_NOW_PLAYING), getString(R.string.nav_now_playing));
         fragmentAdapter.addFragment(ListMovieFragment.newInstance(ListMovieFragment.SORT_ORDER_UPCOMING), getString(R.string.nav_upcoming));
+        fragmentAdapter.addFragment(ListMovieFragment.newInstance(ListMovieFragment.SORT_ORDER_FAVORIT), getString(R.string.nav_favorite));
         viewpager.setAdapter(fragmentAdapter);
         resultTabs.setupWithViewPager(viewpager);
         resultTabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {

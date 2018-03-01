@@ -16,6 +16,7 @@
     <string name="nav_share">Bagikan</string>
     <string name="nav_other">Lainnya</string>
     <string name="nav_about_me">Tentang saya</string>
+    <string name="nav_favorite">Favorit</string>
 
     <string name="home_no_movies_found">Tidak ada data</string>
     <string name="menu_search">Cari…</string>
@@ -28,4 +29,7 @@
     <string name="item_popularity">Popularitas: %s</string>
 
     <string name="movie_detail_overview">Sinopsis</string>
+    <string name="movie_detail_success_favorite">Film ditandai sebagai favorit</string>
+    <string name="movie_detail_success_unfavorite">Film dihapus dari favorit</string>
+    <string name="error_default">Terjadi kesalahan</string>
 </resources>
