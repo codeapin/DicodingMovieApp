@@ -31,6 +31,7 @@ import com.codeapin.dicodingmovieapp.data.remote.service.ApiClient;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.reactivex.Maybe;
+import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -109,24 +110,9 @@ public class MovieDetailActivity extends AppCompatActivity {
 
         fabFavorite.setOnClickListener(v -> {
             if (favoriteMovie) {
-                Uri uri = Uri.parse(DatabaseContract.MovieColumns.CONTENT_URI + "/" + String.valueOf(movieItem.getId()));
-                int delete = getContentResolver().delete(uri, null, null);
-                if (delete > 0) {
-                    Snackbar.make(coordinator, R.string.movie_detail_success_unfavorite, Snackbar.LENGTH_LONG).show();
-                    favoriteMovie = !favoriteMovie;
-                    toggleFavorite(favoriteMovie);
-                } else {
-                    Snackbar.make(coordinator, R.string.error_default, Snackbar.LENGTH_LONG).show();
-                }
+                deleteMovie(movieItem);
             } else {
-                Uri insert = getContentResolver().insert(DatabaseContract.MovieColumns.CONTENT_URI, movieItem.getContentValues());
-                if (insert != null) {
-                    Snackbar.make(coordinator, R.string.movie_detail_success_favorite, Snackbar.LENGTH_LONG).show();
-                    favoriteMovie = !favoriteMovie;
-                    toggleFavorite(favoriteMovie);
-                } else {
-                    Snackbar.make(coordinator, R.string.error_default, Snackbar.LENGTH_LONG).show();
-                }
+                insertMovie(movieItem);
             }
         });
     }
@@ -198,5 +184,46 @@ public class MovieDetailActivity extends AppCompatActivity {
                         },
                         () -> favoriteMovie = false
                 );
+    }
+
+    private void insertMovie(MovieItem movieItem) {
+        Single.fromCallable(() -> getContentResolver().insert(DatabaseContract.MovieColumns.CONTENT_URI, movieItem.getContentValues()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        uri -> {
+                            if (uri!= null) {
+                                Snackbar.make(coordinator, R.string.movie_detail_success_favorite, Snackbar.LENGTH_LONG).show();
+                                favoriteMovie = !favoriteMovie;
+                                toggleFavorite(favoriteMovie);
+                            } else {
+                                Snackbar.make(coordinator, R.string.error_default, Snackbar.LENGTH_LONG).show();
+                            }
+                        },
+                        throwable -> {
+                            Log.d(TAG, "deleteMovie: ", throwable);
+                            Snackbar.make(coordinator, throwable.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        });
+    }
+
+    private void deleteMovie(MovieItem movieItem) {
+        Uri uri = Uri.parse(DatabaseContract.MovieColumns.CONTENT_URI + "/" + String.valueOf(movieItem.getId()));
+        Single.fromCallable(() -> getContentResolver().delete(uri, null, null))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        integer -> {
+                            if (integer > 0) {
+                                Snackbar.make(coordinator, R.string.movie_detail_success_unfavorite, Snackbar.LENGTH_LONG).show();
+                                favoriteMovie = !favoriteMovie;
+                                toggleFavorite(favoriteMovie);
+                            } else {
+                                Snackbar.make(coordinator, R.string.error_default, Snackbar.LENGTH_LONG).show();
+                            }
+                        },
+                        throwable -> {
+                            Log.d(TAG, "deleteMovie: ", throwable);
+                            Snackbar.make(coordinator, throwable.getMessage(), Snackbar.LENGTH_SHORT).show();
+                        });
     }
 }
