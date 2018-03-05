@@ -67,7 +67,6 @@ public class ListMovieFragment extends Fragment {
     Unbinder unbinder;
 
     private MovieAdapter adapter;
-    private MovieHelper movieHelper;
     private CompositeDisposable compositeDisposable = new CompositeDisposable();
     private ApiResponse movieList;
     private int sortOrder;
@@ -92,17 +91,11 @@ public class ListMovieFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        if (sortOrder == SORT_ORDER_FAVORIT && movieHelper != null) {
-            movieHelper.open();
-        }
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (sortOrder == SORT_ORDER_FAVORIT && movieHelper != null) {
-            movieHelper.close();
-        }
     }
 
     @Override
@@ -120,7 +113,6 @@ public class ListMovieFragment extends Fragment {
 
     private void setupView() {
         adapter = new MovieAdapter(null);
-        movieHelper = new MovieHelper(getContext());
         adapter.setMovieOnClickListener(item -> MovieDetailActivity.start(getContext(), item));
         rvHome.setAdapter(adapter);
         rvHome.setLayoutManager(new GridLayoutManager(getContext(), 2));

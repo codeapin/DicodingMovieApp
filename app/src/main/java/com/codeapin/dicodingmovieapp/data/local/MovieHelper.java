@@ -7,15 +7,10 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.codeapin.dicodingmovieapp.data.local.DatabaseContract.MovieColumns;
 import com.codeapin.dicodingmovieapp.data.remote.model.MovieItem;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import static com.codeapin.dicodingmovieapp.data.local.DatabaseContract.*;
 import static com.codeapin.dicodingmovieapp.data.local.DatabaseContract.MovieColumns.*;
+
 
 public class MovieHelper {
 
